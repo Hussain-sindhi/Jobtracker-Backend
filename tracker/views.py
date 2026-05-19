@@ -43,11 +43,18 @@ def delete_application(request, id):
     return redirect('/')
 
 
-@api_view(['GET'])
+@api_view(['GET', 'POST'])
 def get_applications(request):
 
-    apps = Application.objects.all()
+    if request.method == 'GET':
+        apps = Application.objects.all()
+        serializer = ApplicationSerializer(apps, many=True)
+        return Response(serializer.data)
 
-    serializer = ApplicationSerializer(apps, many=True)
-
-    return Response(serializer.data)
+    elif request.method == "POST":
+        serializer = ApplicationSerializer(data=request.data)
+        
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+    return Response(serializer.errors)
