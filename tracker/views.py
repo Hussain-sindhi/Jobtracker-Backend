@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from .serializers import ApplicationSerializer
 
-# Create your views here.
+# Normal Django CRUD (HTML Based).⬇️⬇️
 def home(request):
     # return HttpResponse("Hello, this is home")
     # return render(request, 'home.html')
@@ -42,7 +42,7 @@ def delete_application(request, id):
     app.delete()
     return redirect('/')
 
-
+# DRF API CRUD (JSON Based).⬇️⬇️
 @api_view(['GET', 'POST'])
 def get_applications(request):
 
@@ -58,3 +58,25 @@ def get_applications(request):
             serializer.save()
             return Response(serializer.data)
     return Response(serializer.errors)
+
+@api_view(['GET', 'PUT', 'DELETE'])
+def application_detail(request, id):
+    app = Application.objects.get(id=id)
+
+    # Get single application
+    if request.method == 'GET':
+        serializer = ApplicationSerializer(app)
+        return Response(serializer.data)
+    
+    # Update application
+    elif request.method == 'PUT':
+        serializer = ApplicationSerializer(app, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors)
+    
+    # Delete application
+    elif request.method == 'DELETE':
+        app.delete()
+        return Response("Application deleted")
