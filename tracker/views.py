@@ -57,13 +57,14 @@ def get_applications(request):
         serializer = ApplicationSerializer(data=request.data)
         
         if serializer.is_valid():
-            serializer.save()
+            serializer.save(user=request.user)
             return Response(serializer.data)
     return Response(serializer.errors)
 
 @api_view(['GET', 'PUT', 'DELETE'])
+@permission_classes([IsAuthenticated])
 def application_detail(request, id):
-    app = Application.objects.get(id=id)
+    app = Application.objects.get(id=id, user=request.user)
 
     # Get single application
     if request.method == 'GET':
