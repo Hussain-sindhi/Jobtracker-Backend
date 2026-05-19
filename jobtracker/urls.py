@@ -22,6 +22,8 @@ from django.urls import path
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home),
+    path('add/', views.add_application),
     path('update/<int:id>/', views.update_application),
+    path('delete/<int:id>/', views.delete_application),
     
 ]

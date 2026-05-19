@@ -12,6 +12,7 @@
             <th>Company</th>
             <th>Role</th>
             <th>Status</th>
+            
         </tr>
     </thead>
 
@@ -26,6 +27,10 @@
                 <td>{{ app.status }}</td>
                 <td>
                     <a href="/update/{{ app.id }}/">Edit</a>
+                <td>
+
+                <td>
+                    <a href="/delete/{{ app.id }}/">Delete</a>
                 <td>
             </tr>
             {% endfor %}
