@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.shortcuts import render
 from .models import(Application)
 from .forms import ApplicationForm
-from .serializers import ApplicationSerializer
+from .serializers import ApplicationSerializer, RegisterSerializer
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -83,3 +83,19 @@ def application_detail(request, id):
     elif request.method == 'DELETE':
         app.delete()
         return Response("Application deleted")
+    
+
+@api_view(['POST'])
+def register_user(request):
+
+    serializer = RegisterSerializer(data=request.data)
+
+    if serializer.is_valid():
+
+        serializer.save()
+
+        return Response({
+            "message": "User created successfully"
+        })
+
+    return Response(serializer.errors)

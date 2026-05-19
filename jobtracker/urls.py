@@ -30,5 +30,6 @@ urlpatterns = [
     path('api/applications/<int:id>/', views.application_detail),
     path('api/token/', TokenObtainPairView.as_view()),
     path('api/token/', TokenRefreshView.as_view()),
+    path('api/signup/', views.register_user),
     
 ]
