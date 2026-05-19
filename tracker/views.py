@@ -3,6 +3,9 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from .models import(Application)
 from .forms import ApplicationForm
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+from .serializers import ApplicationSerializer
 
 # Create your views here.
 def home(request):
@@ -38,3 +41,13 @@ def delete_application(request, id):
     app = Application.objects.get(id=id)
     app.delete()
     return redirect('/')
+
+
+@api_view(['GET'])
+def get_applications(request):
+
+    apps = Application.objects.all()
+
+    serializer = ApplicationSerializer(apps, many=True)
+
+    return Response(serializer.data)

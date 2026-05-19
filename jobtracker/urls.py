@@ -25,5 +25,6 @@ urlpatterns = [
     path('add/', views.add_application),
     path('update/<int:id>/', views.update_application),
     path('delete/<int:id>/', views.delete_application),
+    path('api/applications/', views.get_applications),
     
 ]
