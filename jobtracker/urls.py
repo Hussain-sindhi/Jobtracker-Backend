@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin 
 from tracker import views
 from django.urls import path
+from rest_framework_simplejwt.views import (TokenObtainPairView, TokenRefreshView,)
 # from tracker.views import home, add_application
 
 urlpatterns = [
@@ -27,5 +28,7 @@ urlpatterns = [
     path('delete/<int:id>/', views.delete_application),
     path('api/applications/', views.get_applications),
     path('api/applications/<int:id>/', views.application_detail),
+    path('api/token/', TokenObtainPairView.as_view()),
+    path('api/token/', TokenRefreshView.as_view()),
     
 ]

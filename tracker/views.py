@@ -1,11 +1,12 @@
-from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.shortcuts import render, redirect
 from django.shortcuts import render
 from .models import(Application)
 from .forms import ApplicationForm
-from rest_framework.response import Response
-from rest_framework.decorators import api_view
 from .serializers import ApplicationSerializer
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 
 # Normal Django CRUD (HTML Based).⬇️⬇️
 def home(request):
@@ -44,10 +45,11 @@ def delete_application(request, id):
 
 # DRF API CRUD (JSON Based).⬇️⬇️
 @api_view(['GET', 'POST'])
+@permission_classes([IsAuthenticated])
 def get_applications(request):
 
     if request.method == 'GET':
-        apps = Application.objects.all()
+        apps = Application.objects.filter(user=request.user)
         serializer = ApplicationSerializer(apps, many=True)
         return Response(serializer.data)
 
