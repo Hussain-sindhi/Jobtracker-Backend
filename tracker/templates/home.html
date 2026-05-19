@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Tracker</title>
+</head>
+<body>
+<table border="1">
+
+    <thead>
+        <tr>
+            <th>Company</th>
+            <th>Role</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        {% if apps %}
+
+            {% for app in apps %}
+            <tr>
+                <td>{{ app.company_name }}</td>
+                <td>{{ app.role }}</td>
+                <td>{{ app.status }}</td>
+            </tr>
+            {% endfor %}
+
+        {% else %}
+
+            <tr>
+                <td colspan="3">No applications found.</td>
+            </tr>
+
+        {% endif %}
+
+    </tbody>
+
+</table>
+</body>
+</html>
