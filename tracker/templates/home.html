@@ -7,7 +7,6 @@
 </head>
 <body>
 <table border="1">
-
     <thead>
         <tr>
             <th>Company</th>
@@ -25,6 +24,9 @@
                 <td>{{ app.company_name }}</td>
                 <td>{{ app.role }}</td>
                 <td>{{ app.status }}</td>
+                <td>
+                    <a href="/update/{{ app.id }}/">Edit</a>
+                <td>
             </tr>
             {% endfor %}
 
